@@ -1,18 +1,31 @@
 buildscript {
     repositories {
         mavenCentral()
+        gradlePluginPortal()
     }
     dependencies {
         classpath 'io.github.gradle-nexus:publish-plugin:1.1.0'
     }
 }
 
+apply plugin: 'java-library'
 apply plugin: 'io.github.gradle-nexus.publish-plugin'
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
 group = 'io.github.davidon4'
 version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+    withJavadocJar()
+    withSourcesJar()
+}
 
 nexusPublishing {
     repositories {
