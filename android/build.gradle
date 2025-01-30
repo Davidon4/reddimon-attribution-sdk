@@ -1,0 +1,68 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'io.github.gradle-nexus:publish-plugin:1.1.0'
+    }
+}
+
+apply plugin: 'io.github.gradle-nexus.publish-plugin'
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+group = 'io.github.davidon4'
+version = '1.0.0'
+
+nexusPublishing {
+    repositories {
+        sonatype {
+            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+            username = System.getenv("OSSRH_USERNAME")
+            password = System.getenv("OSSRH_PASSWORD")
+        }
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            
+            pom {
+                name = 'Attribution SDK'
+                description = 'Android Attribution SDK for tracking app installations and events'
+                url = 'https://github.com/Davidon4/reddimon-attribution-sdk'
+                
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://opensource.org/licenses/MIT'
+                    }
+                }
+                
+                developers {
+                    developer {
+                        id = 'davidon4'
+                        name = 'Davidon4'
+                        email = 'dev@reddimon.com'
+                    }
+                }
+                
+                scm {
+                    connection = 'scm:git:git://github.com/Davidon4/reddimon-attribution-sdk.git'
+                    developerConnection = 'scm:git:ssh://github.com/Davidon4/reddimon-attribution-sdk.git'
+                    url = 'https://github.com/Davidon4/reddimon-attribution-sdk'
+                }
+            }
+        }
+    }
+}
+
+signing {
+    def signingKey = System.getenv("SIGNING_KEY")
+    def signingPassword = System.getenv("SIGNING_PASSWORD")
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    sign publishing.publications.mavenJava
+} 

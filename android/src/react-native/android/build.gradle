@@ -13,7 +13,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    namespace 'com.reddimon.attribution'
+    namespace 'io.github.davidon4.attribution'
     compileSdk 34
 
     defaultConfig {

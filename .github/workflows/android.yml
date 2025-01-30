@@ -41,6 +41,7 @@ jobs:
           cache: gradle
 
       - name: Publish to Maven Central
+        working-directory: ./android
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
