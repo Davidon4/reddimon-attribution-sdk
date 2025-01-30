@@ -287,7 +287,7 @@ For issues and feature requests:
 
 - Email: support@reddimon.com
 - Documentation: https://docs.reddimon.com
-- GitHub Issues: https://github.com/juggernaut.dev/reddimon-attribution-sdk/issues
+- GitHub Issues: https://github.com/Davidon4/reddimon-attribution-sdk/issues
 
 ## License
 

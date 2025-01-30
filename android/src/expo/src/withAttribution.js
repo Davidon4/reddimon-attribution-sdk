@@ -4,7 +4,6 @@ const withAttribution = (config) => {
   // Modify Android permissions
   config = withAndroidManifest(config, async (config) => {
     const androidManifest = config.modResults;
-    const mainApplication = androidManifest.manifest.application[0];
 
     // Add permissions
     if (!androidManifest.manifest.$.hasOwnProperty("uses-permission")) {

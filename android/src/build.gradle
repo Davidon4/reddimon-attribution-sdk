@@ -89,7 +89,7 @@ publishing {
             pom {
                 name = 'Attribution SDK'
                 description = 'Mobile app attribution tracking SDK for Android'
-                url = 'https://github.com/juggernaut.dev/reddimon-attribution-sdk'
+                url = 'https://github.com/Davidon4/reddimon-attribution-sdk'
                 licenses {
                     license {
                         name = 'MIT License'
@@ -98,15 +98,15 @@ publishing {
                 }
                 developers {
                     developer {
-                        id = 'juggernaut'
-                        name = 'Juggernaut Dev'
+                        id = 'davidon'
+                        name = 'Davidon4'
                         email = 'dev@reddimon.com'
                     }
                 }
                 scm {
-                    connection = 'scm:git:github.com/juggernaut.dev/reddimon-attribution-sdk.git'
-                    developerConnection = 'scm:git:ssh://github.com/juggernaut.dev/reddimon-attribution-sdk.git'
-                    url = 'https://github.com/juggernaut.dev/reddimon-attribution-sdk/tree/main'
+                    connection = 'scm:git:github.com/Davidon4/reddimon-attribution-sdk.git'
+                    developerConnection = 'scm:git:ssh://github.com/Davidon4/reddimon-attribution-sdk.git'
+                    url = 'https://github.com/Davidon4/reddimon-attribution-sdk/tree/main'
                 }
             }
         }

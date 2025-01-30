@@ -1,0 +1,46 @@
+name: Publish NPM Packages
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  publish-npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18.x"
+          registry-url: "https://registry.npmjs.org"
+
+      # Build and publish React Native package
+      - name: Install React Native dependencies
+        working-directory: ./android/src/react-native
+        run: npm install
+
+      - name: Build React Native package
+        working-directory: ./android/src/react-native
+        run: npm run prepare
+
+      - name: Publish React Native package
+        working-directory: ./android/src/react-native
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+      # Build and publish Expo package
+      - name: Install Expo dependencies
+        working-directory: ./android/src/expo
+        run: npm install
+
+      - name: Build Expo package
+        working-directory: ./android/src/expo
+        run: npm run build
+
+      - name: Publish Expo package
+        working-directory: ./android/src/expo
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
