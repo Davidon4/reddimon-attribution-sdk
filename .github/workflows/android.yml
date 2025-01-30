@@ -37,4 +37,6 @@ jobs:
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
-        run: ./gradlew publish --info
+        run: |
+          echo "${{ secrets.SIGNING_KEY }}" > signing-key.gpg
+          ./gradlew publish --info
