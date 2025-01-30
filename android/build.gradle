@@ -28,11 +28,13 @@ java {
 }
 
 nexusPublishing {
+    connectTimeout = Duration.ofMinutes(3)
+    clientTimeout = Duration.ofMinutes(3)
     repositories {
         sonatype {
             username = System.getenv("OSSRH_USERNAME")
             password = System.getenv("OSSRH_PASSWORD")
-            nexusUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/releases/"))
+            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
             snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
         }
     }
