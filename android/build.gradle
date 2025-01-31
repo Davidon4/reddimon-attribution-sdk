@@ -75,13 +75,6 @@ publishing {
 }
 
 signing {
-    sign configurations.archives
-    
-    def secretKeyRingFile = new File("signing-key.gpg")
-    useInMemoryPgpKeys(
-        "956CC81A",                              // Key ID
-        secretKeyRingFile.getText('UTF-8'),      // Key file content
-        System.getenv("SIGNING_PASSWORD")        // Key password
-    )
+    useGpgCmd()
     sign publishing.publications.mavenJava
 } 

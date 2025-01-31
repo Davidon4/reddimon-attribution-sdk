@@ -19,15 +19,15 @@ jobs:
           distribution: "temurin"
 
       - name: Import GPG key
+        env:
+          GPG_KEY: ${{ secrets.SIGNING_KEY }}
         run: |
-          echo -n "${{ secrets.SIGNING_KEY }}" | base64 --decode > signing-key.gpg
+          echo "$GPG_KEY" > signing-key.asc
+          gpg --batch --import signing-key.asc
 
       - name: Make gradlew executable
         working-directory: ./android
-        run: |
-          chmod +x gradlew
-          ls -la
-          pwd
+        run: chmod +x gradlew
 
       - name: Build
         working-directory: ./android
