@@ -63,12 +63,13 @@ publishing {
     repositories {
         maven {
             name = "OSSRH"
-            url = version.endsWith('SNAPSHOT') 
-                ? "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-                : "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
             credentials {
-                username = System.getenv("OSSRH_USERNAME")
-                password = System.getenv("OSSRH_PASSWORD")
+                username = "RtCRa6Y9"  // Your token username
+                password = "Fexl+8KLgo4C/MpVD7pdyXSqTnQ7vAJJHLgZQLoKRdAK"  // Your token password
+            }
+            authentication {
+                basic(BasicAuthentication)
             }
         }
     }
