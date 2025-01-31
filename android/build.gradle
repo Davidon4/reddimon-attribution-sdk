@@ -2,9 +2,9 @@ buildscript {
     repositories {
         mavenCentral()
         gradlePluginPortal()
-        maven {
-            url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-        }
+    }
+    dependencies {
+        classpath 'io.github.gradle-nexus:publish-plugin:1.3.0'
     }
 }
 
@@ -12,17 +12,15 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'signing'
-    id 'org.sonatype.central' version '0.7.0'
 }
+
+apply plugin: 'io.github.gradle-nexus.publish-plugin'
 
 group = 'io.github.davidon4'
 version = '1.0.0'
 
 repositories {
     mavenCentral()
-    maven {
-        url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-    }
 }
 
 java {
@@ -76,10 +74,15 @@ signing {
     sign publishing.publications.mavenJava
 }
 
-central {
-    publishingServerId = "central"
-    autoPublish = true
-    waitUntil = "published"
+nexusPublishing {
+    repositories {
+        sonatype {
+            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+            username = System.getenv("OSSRH_USERNAME")
+            password = System.getenv("OSSRH_PASSWORD")
+        }
+    }
 }
 
 // Trigger build
