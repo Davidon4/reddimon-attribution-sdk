@@ -24,6 +24,11 @@ jobs:
         run: |
           echo "$GPG_KEY" > signing-key.asc
           gpg --batch --import signing-key.asc
+          # Create batch file for GPG
+          echo "use-agent" > ~/.gnupg/gpg.conf
+          echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
+          echo "allow-loopback-pinentry" > ~/.gnupg/gpg-agent.conf
+          echo "RELOADAGENT" | gpg-connect-agent
 
       - name: Make gradlew executable
         working-directory: ./android
@@ -40,4 +45,6 @@ jobs:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
-        run: ./gradlew publish --info
+        run: |
+          echo "${{ secrets.SIGNING_PASSWORD }}" | gpg --batch --pinentry-mode loopback --passphrase-fd 0 --sign
+          ./gradlew publish --info
