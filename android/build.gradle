@@ -52,15 +52,6 @@ publishing {
             }
         }
     }
-    repositories {
-        maven {
-            url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-            credentials {
-                username = project.properties["ossrhUsername"] ?: System.getenv("OSSRH_USERNAME")
-                password = project.properties["ossrhPassword"] ?: System.getenv("OSSRH_PASSWORD")
-            }
-        }
-    }
 }
 
 signing {
@@ -75,10 +66,11 @@ signing {
 nexusPublishing {
     repositories {
         sonatype {
+            stagingProfileId = "956cc81a"
             nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
             snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
-            username = project.properties["ossrhUsername"] ?: System.getenv("OSSRH_USERNAME")
-            password = project.properties["ossrhPassword"] ?: System.getenv("OSSRH_PASSWORD")
+            username = System.getenv("OSSRH_USERNAME")
+            password = System.getenv("OSSRH_PASSWORD")
         }
     }
 }
