@@ -22,14 +22,21 @@ jobs:
         env:
           GPG_KEY: ${{ secrets.SIGNING_KEY }}
         run: |
+          # Kill any existing gpg-agent
+          pkill gpg-agent || true
+
+          # Import the key
           echo "$GPG_KEY" > signing-key.asc
           gpg --batch --import signing-key.asc
+
+          # Configure GPG
           mkdir -p ~/.gnupg
           echo "use-agent" > ~/.gnupg/gpg.conf
           echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
           echo "allow-loopback-pinentry" > ~/.gnupg/gpg-agent.conf
-          gpgconf --kill gpg-agent
-          gpg-agent --daemon
+
+          # Start agent
+          eval $(gpg-agent --daemon)
           echo "RELOADAGENT" | gpg-connect-agent
 
       - name: Make gradlew executable
