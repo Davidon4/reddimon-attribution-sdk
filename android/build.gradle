@@ -82,4 +82,5 @@ signing {
     useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
     sign publishing.publications.mavenJava
 } 
-# Trigger build
+
+// Trigger build
