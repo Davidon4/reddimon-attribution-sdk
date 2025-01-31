@@ -1,9 +1,23 @@
+# Gradle properties with credentials
+android/gradle.properties
+
+# Gradle files
+.gradle/
+build/
+
+# Local configuration file
+local.properties
+
+# IDE files
+.idea/
 *.iml
-.gradle
-/local.properties
-/.idea
 .DS_Store
-/build
+
+# Captures
 /captures
+
+# External Native Build
 .externalNativeBuild
+
+# C++
 .cxx
