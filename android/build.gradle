@@ -63,6 +63,16 @@ publishing {
             }
         }
     }
+    repositories {
+        maven {
+            name = "OSSRH"
+            url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            credentials {
+                username = "RtCRa6Y9"  // Your token username
+                password = "Fexl+8KLgo4C/MpVD7pdyXSqTnQ7vAJJHLgZQLoKRdAK"  // Your token password
+            }
+        }
+    }
 }
 
 signing {
@@ -72,24 +82,6 @@ signing {
     
     useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
     sign publishing.publications.mavenJava
-}
-
-nexusPublishing {
-    repositories {
-        sonatype {
-            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
-            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
-            username = System.getenv("OSSRH_USERNAME") ?: project.findProperty("ossrhUsername")
-            password = System.getenv("OSSRH_PASSWORD") ?: project.findProperty("ossrhPassword")
-            packageGroup = "io.github.davidon4"
-        }
-    }
-    transitionCheckOptions {
-        maxRetries.set(60)
-        delayBetween.set(java.time.Duration.ofSeconds(5))
-    }
-    connectTimeout.set(java.time.Duration.ofMinutes(5))
-    clientTimeout.set(java.time.Duration.ofMinutes(5))
 }
 
 // Trigger build
