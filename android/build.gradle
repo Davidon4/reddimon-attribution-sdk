@@ -1,16 +1,9 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        gradlePluginPortal()
-    }
-    dependencies {
-        classpath 'io.github.gradle-nexus:publish-plugin:1.1.0'
-    }
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+    id 'io.github.gradle-nexus.publish-plugin' version '1.1.0'
 }
-
-apply plugin: 'java-library'
-apply plugin: 'maven-publish'
-apply plugin: 'signing'
 
 group = 'io.github.davidon4'
 version = '1.0.0'
@@ -59,14 +52,12 @@ publishing {
             }
         }
     }
-    
     repositories {
         maven {
-            name = "OSSRH"
-            url = "https://s01.oss.sonatype.org/content/repositories/releases/"
+            url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
             credentials {
-                username = "RtCRa6Y9"
-                password = "Fexl+8KLgo4C/MpVD7pdyXSqTnQ7vAJJHLgZQLoKRdAK"
+                username = project.properties["ossrhUsername"] ?: System.getenv("OSSRH_USERNAME")
+                password = project.properties["ossrhPassword"] ?: System.getenv("OSSRH_PASSWORD")
             }
         }
     }
@@ -79,6 +70,17 @@ signing {
     
     useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
     sign publishing.publications.mavenJava
-} 
+}
+
+nexusPublishing {
+    repositories {
+        sonatype {
+            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+            username = project.properties["ossrhUsername"] ?: System.getenv("OSSRH_USERNAME")
+            password = project.properties["ossrhPassword"] ?: System.getenv("OSSRH_PASSWORD")
+        }
+    }
+}
 
 // Trigger build
